@@ -22,3 +22,11 @@ src/
 ├── buscas.py
 └── main.py
 ```
+
+
+## Estado deste segundo commit
+
+Nesta etapa foi adicionada a busca em profundidade (DFS), utilizando uma pilha
+para controlar a fronteira. A BFS do commit anterior foi mantida para permitir
+a comparação entre as duas estratégias. Ainda não foram implementadas UCS,
+A* ou as métricas completas exigidas pela atividade.
