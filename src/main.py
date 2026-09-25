@@ -54,19 +54,31 @@ def main():
         objetivo,
         heuristica_manhattan_4
     )
-
+    print("====================================")
     print("Caatinga.AI - Sprint 1")
     print(f"Matrícula: {matricula}")
     print(f"Tamanho do pomar: {len(pomar)}x{len(pomar[0])}")
+    print("====================================")
+
+    print("====================================")
     print(f"Caminho encontrado pela BFS: {caminho_bfs}")
     print(f"Caminho encontrado pela DFS: {caminho_dfs}")
     print(f"Caminho encontrado pela UCS: {caminho_ucs}")
+    print("====================================")
+
+    print("====================================")
     print(f"Nós expandidos pelo A* h1 = 0: {expandidos_h1}")
     print(f"Nós expandidos pelo A* h2 = Manhattan: {expandidos_h2}")
     print(f"Nós expandidos pelo A* h3 = 4 × Manhattan: {expandidos_h3}")
+    print("====================================")
+
+    print("====================================")
     print(f"Custo da rota A* h1 = 0: {custo_h1}")
     print(f"Custo da rota A* h2 = Manhattan: {custo_h2}")
     print(f"Custo da rota A* h3 = 4 × Manhattan: {custo_h3}")  
+    print("====================================")
 
 if __name__ == "__main__":
     main()
+
+   
