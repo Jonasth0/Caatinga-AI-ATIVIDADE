@@ -42,6 +42,16 @@ REGRAS = [
     ],
         "entao": "risco_infestacao"
     },
+#R8 Adição da parte 4.4:
+#decisão que deve permanecer como regra explícita é a não autorização de uma nova aplicação quando o intervalo mínimo estabelecido não tiver sido cumprido.
+#Essa decisão deve ser auditável, pois o responsável precisa conseguir verificar diretamente qual condição levou ao bloqueio. Dessa forma, a decisão não depende de uma justificativa implícita de um modelo
+#aprendido, permitindo identificar claramente o fato observado, a regra aplicada e o responsável pela decisão.
+    {
+    "nome": "R8",
+    "se": ["intervalo_minimo_aplicacao_nao_atingido"],
+    "entao": "nao_autorizar_aplicacao"
+    },
+
     {
         "nome": "R4",
         "se": ["armadilha_negativa"],
