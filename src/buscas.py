@@ -1,6 +1,7 @@
 """Estruturas iniciais para os algoritmos de busca do Caatinga.AI."""
 
 from collections import deque
+import heapq
 
 ORDEM = [
     (-1, 0),  # norte
@@ -96,3 +97,52 @@ def busca_profundidade(pomar, inicio, objetivo):
 # Próximas etapas do projeto:
 # - busca de custo uniforme (UCS)
 # - A* e heurísticas
+
+import heapq
+
+def busca_custo_uniforme(pomar, inicio, objetivo):
+    """Busca de custo uniforme (UCS)."""
+
+    fila = []
+    contador = 0
+
+    heapq.heappush(fila, (0, contador, inicio))
+
+    melhor_custo = {inicio: 0}
+    pai = {inicio: None}
+
+    while fila:
+        custo_atual, _, atual = heapq.heappop(fila)
+
+        if custo_atual != melhor_custo.get(atual):
+            continue
+
+        if atual == objetivo:
+            return reconstruir(pai, inicio, objetivo)
+
+        for vizinho in vizinhos(pomar, atual):
+
+            novo_custo = (
+                custo_atual
+                + custo_entrada(pomar, vizinho)
+            )
+
+            if novo_custo < melhor_custo.get(
+                vizinho,
+                float("inf")
+            ):
+                melhor_custo[vizinho] = novo_custo
+                pai[vizinho] = atual
+
+                contador += 1
+
+                heapq.heappush(
+                    fila,
+                    (
+                        novo_custo,
+                        contador,
+                        vizinho
+                    )
+                )
+
+    return []
