@@ -98,8 +98,6 @@ def busca_profundidade(pomar, inicio, objetivo):
 # - busca de custo uniforme (UCS)
 # - A* e heurísticas
 
-import heapq
-
 def busca_custo_uniforme(pomar, inicio, objetivo):
     """Busca de custo uniforme (UCS)."""
 
@@ -140,6 +138,115 @@ def busca_custo_uniforme(pomar, inicio, objetivo):
                     fila,
                     (
                         novo_custo,
+                        contador,
+                        vizinho
+                    )
+                )
+
+    return []
+
+#adição de novas funções!
+
+def heuristica_zero(estado, objetivo):
+    """h1(n) = 0."""
+    return 0
+
+
+def heuristica_manhattan(estado, objetivo):
+    """h2(n) = distância de Manhattan até o objetivo."""
+    linha, coluna = estado
+    linha_obj, coluna_obj = objetivo
+
+    return abs(linha - linha_obj) + abs(coluna - coluna_obj)
+
+
+def heuristica_manhattan_4(estado, objetivo):
+    """h3(n) = 4 × distância de Manhattan até o objetivo."""
+    return 4 * heuristica_manhattan(estado, objetivo)
+
+def busca_a_estrela(pomar, inicio, objetivo, heuristica):
+    """Busca A* usando a heurística recebida."""
+
+    fila = []
+
+    contador = 0
+
+    custo_g = {
+        inicio: 0
+    }
+
+    pai = {
+        inicio: None
+    }
+
+    f_inicial = heuristica(
+        inicio,
+        objetivo
+    )
+
+    heapq.heappush(
+        fila,
+        (
+            f_inicial,
+            0,
+            contador,
+            inicio
+        )
+    )
+
+    while fila:
+
+        f_atual, g_atual, _, atual = heapq.heappop(fila)
+
+        # Ignora uma entrada antiga da fila.
+        if g_atual != custo_g.get(atual):
+            continue
+
+        if atual == objetivo:
+            return reconstruir(
+                pai,
+                inicio,
+                objetivo
+            )
+
+        for vizinho in vizinhos(
+            pomar,
+            atual
+        ):
+
+            custo_movimento = custo_entrada(
+                pomar,
+                vizinho
+            )
+
+            novo_g = (
+                g_atual
+                + custo_movimento
+            )
+
+            if novo_g < custo_g.get(
+                vizinho,
+                float("inf")
+            ):
+
+                custo_g[vizinho] = novo_g
+
+                pai[vizinho] = atual
+
+                h = heuristica(
+                    vizinho,
+                    objetivo
+                )
+
+                f = novo_g + h
+
+                contador += 1
+
+                heapq.heappush(
+                    fila,
+                    (
+                        f,
+                        novo_g,
                         contador,
                         vizinho
                     )
