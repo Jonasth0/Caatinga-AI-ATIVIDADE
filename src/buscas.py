@@ -25,10 +25,18 @@ def vizinhos(pomar, estado):
 
     return resultado
 
-
 def custo_entrada(pomar, estado):
     """Retorna o custo de entrar em uma célula."""
     return 4 if pomar[estado[0]][estado[1]] == "~" else 1
+
+def custo_caminho(pomar, caminho):
+    """Calcula o custo total de um caminho."""
+    custo = 0
+
+    for estado in caminho[1:]:
+        custo += custo_entrada(pomar, estado)
+
+    return custo
 
 
 def reconstruir(pai, inicio, objetivo):
@@ -170,6 +178,7 @@ def busca_a_estrela(pomar, inicio, objetivo, heuristica):
     fila = []
 
     contador = 0
+    expandidos = 0
 
     custo_g = {
         inicio: 0
@@ -202,12 +211,21 @@ def busca_a_estrela(pomar, inicio, objetivo, heuristica):
         if g_atual != custo_g.get(atual):
             continue
 
+        expandidos += 1
+
         if atual == objetivo:
-            return reconstruir(
+            caminho = reconstruir(
                 pai,
                 inicio,
                 objetivo
             )
+
+            custo = custo_caminho(
+                pomar,
+                caminho
+            )
+
+            return caminho, custo, expandidos
 
         for vizinho in vizinhos(
             pomar,
@@ -252,4 +270,11 @@ def busca_a_estrela(pomar, inicio, objetivo, heuristica):
                     )
                 )
 
-    return []
+    return [], 0, expandidos
+
+#Admissibilidade parte 3.2 concluida!
+#breve relatorio sobre a situação
+#A heurística h2(n), baseada na distância de Manhattan, é admissível porque cada movimento altera apenas uma coordenada em uma unidade e o menor custo de entrada em uma célula é 1. Dessa forma, a
+#distância de Manhattan nunca supera o custo real mínimo necessário para alcançar o objetivo. Já a heurística h3(n) = 4 × Manhattan não é admissível. No pomar gerado pela matrícula 20231045,
+#considerando a célula (11,10) e o objetivo (11,11), a distância de Manhattan é 1 e h3 = 4. Entretanto, a célula objetivo possui custo de entrada 1, fazendo com que o custo real restante seja 1. Como 4 > 1, h3 superestima o custo real.
+#Continuação da proxima fase!

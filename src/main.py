@@ -34,21 +34,21 @@ def main():
         objetivo
     )
 
-    caminho_a_h1 = busca_a_estrela(
+    caminho_a_h1, custo_h1, expandidos_h1 = busca_a_estrela(
         pomar,
         inicio,
         objetivo,
         heuristica_zero
     )
 
-    caminho_a_h2 = busca_a_estrela(
+    caminho_a_h2, custo_h2, expandidos_h2 = busca_a_estrela(
         pomar,
         inicio,
         objetivo,
         heuristica_manhattan
     )
 
-    caminho_a_h3 = busca_a_estrela(
+    caminho_a_h3, custo_h3, expandidos_h3 = busca_a_estrela(
         pomar,
         inicio,
         objetivo,
@@ -61,10 +61,12 @@ def main():
     print(f"Caminho encontrado pela BFS: {caminho_bfs}")
     print(f"Caminho encontrado pela DFS: {caminho_dfs}")
     print(f"Caminho encontrado pela UCS: {caminho_ucs}")
-    print(f"Caminho encontrado pelo A* h1 = 0: {caminho_a_h1}")
-    print(f"Caminho encontrado pelo A* h2 = Manhattan: {caminho_a_h2}")
-    print(f"Caminho encontrado pelo A* h3 = 4 × Manhattan: {caminho_a_h3}")
-
+    print(f"Nós expandidos pelo A* h1 = 0: {expandidos_h1}")
+    print(f"Nós expandidos pelo A* h2 = Manhattan: {expandidos_h2}")
+    print(f"Nós expandidos pelo A* h3 = 4 × Manhattan: {expandidos_h3}")
+    print(f"Custo da rota A* h1 = 0: {custo_h1}")
+    print(f"Custo da rota A* h2 = Manhattan: {custo_h2}")
+    print(f"Custo da rota A* h3 = 4 × Manhattan: {custo_h3}")  
 
 if __name__ == "__main__":
     main()
